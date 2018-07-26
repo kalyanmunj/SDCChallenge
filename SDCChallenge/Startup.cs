@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Options;
 using SDCChallenge.Services;
 namespace SDCChallenge
@@ -30,6 +31,13 @@ namespace SDCChallenge
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            //using built in logger factory. register using Add provider for 3rd part loggers
+            loggerFactory.AddConsole();
+            var logger = loggerFactory.CreateLogger <ConsoleLogger>();
+
+            //Writes to Visual studio output window
+            logger.LogInformation("Executing configure()");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
