@@ -8,5 +8,8 @@ namespace SDCChallenge.Services
     public interface ISpacexService
     {
         List<LaunchPadDetails> GetLaunchPadDetails(string Id);
+
+        List<LaunchPadDetails> GetLaunchPadDetails(LaunchPadDetails launchPadDetails);
+
     }
 }

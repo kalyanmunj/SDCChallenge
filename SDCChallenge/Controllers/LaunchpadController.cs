@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SDCChallenge.Services;
-
+using SDCChallenge.Models;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SDCChallenge.Controllers
@@ -23,12 +23,20 @@ namespace SDCChallenge.Controllers
         [HttpGet("{id?}")]
         public IActionResult Get(string id)
         {
-            var res = _spacexService.GetLaunchPadDetails(id);
-            if (res != null && res.Count > 0)
-                return Ok(_spacexService.GetLaunchPadDetails(id));
-            else return NotFound();
+            var launchPadDetails = _spacexService.GetLaunchPadDetails(id);
+            //if (res != null && res.Count > 0)
+                return Ok(launchPadDetails);
+            //else return NotFound();
         }
+        //[Route("GetLaunchPadDetailsByID")]
+        //[HttpGet()]
+        //public IActionResult Get(LaunchPadDetails launchPadDetails)
+        //{
+        //    var result = _spacexService.GetLaunchPadDetails(launchPadDetails);
+        //    //if (res != null && res.Count > 0)
+        //    return Ok(result);
+        //    //else return NotFound();
+        //}
 
- 
     }
 }

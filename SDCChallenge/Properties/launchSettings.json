@@ -19,7 +19,7 @@
     "SDCChallenge": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchUrl": "api/Launchpad",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

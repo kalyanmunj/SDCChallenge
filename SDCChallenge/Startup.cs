@@ -31,7 +31,7 @@ namespace SDCChallenge
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            //using built in logger factory. register using Add provider for 3rd part loggers
+            //using built in logger factory. Register using Add provider method for 3rd party loggers
             loggerFactory.AddConsole();
             var logger = loggerFactory.CreateLogger <ConsoleLogger>();
 
