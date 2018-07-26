@@ -20,10 +20,13 @@ namespace SDCChallenge.Controllers
         }
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
+        [HttpGet("{id?}")]
         public IActionResult Get(string id)
         {
-            return Ok(_spacexService.GetLaunchPadDetails(id));
+            var res = _spacexService.GetLaunchPadDetails(id);
+            if (res != null && res.Count > 0)
+                return Ok(_spacexService.GetLaunchPadDetails(id));
+            else return NotFound();
         }
 
  

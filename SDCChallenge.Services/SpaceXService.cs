@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SDCChallenge.Models;
 using SDCChallenge.Services.Gateways;
 
@@ -9,7 +10,7 @@ namespace SDCChallenge.Services
 
         
 
-        public LaunchPadDetails GetLaunchPadDetails(string Id)
+        public List<LaunchPadDetails> GetLaunchPadDetails(string Id)
         {
             //TODO: Call api gateway 
             SpacexGateway gateway = new SpacexGateway();

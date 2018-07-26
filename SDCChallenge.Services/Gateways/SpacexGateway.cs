@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -13,7 +14,7 @@ namespace SDCChallenge.Services.Gateways
 {
     class SpacexGateway
     {
-        private Uri _spacexAPI = new Uri("https://api.spacexdata.com/v2/launchpads/");
+        private Uri _spacexAPI = new Uri("https://api.spacexdata.com/v2/");
 
         HttpClient client = new HttpClient();
 
@@ -24,18 +25,21 @@ namespace SDCChallenge.Services.Gateways
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<LaunchPadDetails> GetLaunchpadDetails(string Id)
+        public async Task<List<LaunchPadDetails>> GetLaunchpadDetails(string Id)
         {
-            SpacexgatewayResponse gatewayResponse = new SpacexgatewayResponse();
-            HttpResponseMessage response = await client.GetAsync(Id);
+            SpacexgatewayResponse[] gatewayResponse;
+            List<LaunchPadDetails> res = new List<LaunchPadDetails>();
+            HttpResponseMessage response = await client.GetAsync("launchpads/");
             if(response.IsSuccessStatusCode)
             {
                 var result = response.Content.ReadAsStringAsync().Result;
-                 gatewayResponse =  JsonConvert.DeserializeObject<SpacexgatewayResponse>(result);
-                
+                 gatewayResponse =  JsonConvert.DeserializeObject<SpacexgatewayResponse[]>(result);
+                 res = gatewayResponse.ToList().Select(x=> new LaunchPadDetails() { LaunchPadID = x.id , LaunchPadName = x.full_name , LaunchPadStatus = x.status }).ToList();
             }
             //TODO: use auto mmapper
-            return new LaunchPadDetails { LaunchPadID = gatewayResponse.id, LaunchPadName = gatewayResponse.full_name, LaunchPadStatus = gatewayResponse.status };
+           
+            return Id==null?res:res.Where(x=> x.LaunchPadID == Id).ToList();
+            //return new List<LaunchPadDetails> { LaunchPadID = gatewayResponse.id, LaunchPadName = gatewayResponse.full_name, LaunchPadStatus = gatewayResponse.status };
         }
       
     }
